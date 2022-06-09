@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mp?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 1234
+server:
+  port: 8888
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.shop.pojo
+  global-config:
+    db-config:
+      table-prefix: tb_
+
+logging:
+  level:
+    com.shop.mapper: debug
+jwt:
+  tokenHeader: Authorization
+  secret: shop-secret
+  expiration: 86400
+  tokenHead: Bearer
