@@ -1,7 +1,7 @@
 package com.shop.config.securityConfig;
 
-import com.shop.pojo.TbUser;
-import com.shop.service.ITbUserService;
+import com.shop.pojo.Admin;
+import com.shop.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private ITbUserService iTbUserService;
+    private IAdminService iAdminService;
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
@@ -35,9 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         web.ignoring().antMatchers(
-                "/login",
-                "/registry",
-                "/logout",
+                "/admin/login",
+                "/admin/registry",
                 "/css/**",
                 "/js/**",
                 "/index.html",
@@ -75,9 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
 
         return username->{
-            TbUser user = iTbUserService.getUserByUserName(username);
-            if (null!=user){
-                return user;
+            Admin admin = iAdminService.getUserByUserName(username);
+            if (null!=admin){
+                return admin;
             }
             return null;
         };

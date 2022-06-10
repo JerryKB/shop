@@ -22,12 +22,6 @@ public class JWTTokenUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    /**
-     * 根据用户信息生成token
-     *
-     * @param userDetails
-     * @return
-     */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
@@ -35,12 +29,7 @@ public class JWTTokenUtil {
         return generateToken(claims);
     }
 
-    /**
-     * 根据负载生成token
-     *
-     * @param claims
-     * @return
-     */
+
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -53,12 +42,7 @@ public class JWTTokenUtil {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
 
-    /**
-     * 从token中获取用户名
-     *
-     * @param token
-     * @return
-     */
+
     public String getUsernameFromToken(String token) {
         String username;
         try {
@@ -69,13 +53,7 @@ public class JWTTokenUtil {
         }
         return username;
     }
-    /**
-     * 从token中获取荷载
-     * 异常处理?
-     *
-     * @param token
-     * @return
-     */
+
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
@@ -89,45 +67,23 @@ public class JWTTokenUtil {
         return claims;
     }
 
-    /**
-     * 验证token是否有效
-     *
-     * @param token
-     * @param userDetails
-     * @return
-     */
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = getUsernameFromToken(token);
         return username != null && username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
-    /**
-     * 判断token是否失效
-     *
-     * @param token
-     * @return
-     */
+
     private boolean isTokenExpired(String token) {
 
         Date expireDate = getExpiredDateFromToken(token);
         return expireDate.before(new Date());
     }
 
-    /**
-     * 判断token是否可以被刷新
-     *
-     * @param token
-     * @return
-     */
+
     public boolean canRefresh(String token) {
         return !isTokenExpired(token);
     }
 
-    /**
-     * 刷新token
-     *
-     * @param token
-     * @return
-     */
+
     public String refreshToken(String token) {
         Claims claims = getClaimsFromToken(token);
         claims.put(CLAIM_KEY_CREATED, new Date());
@@ -135,15 +91,6 @@ public class JWTTokenUtil {
     }
 
 
-
-
-
-    /**
-     * 从token获取当前失效时间
-     *
-     * @param token
-     * @return
-     */
     private Date getExpiredDateFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
         return claims.getExpiration();
