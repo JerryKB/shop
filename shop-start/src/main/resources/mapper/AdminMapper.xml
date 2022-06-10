@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.AdminMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.pojo.Admin">
+        <id column="admin_id" property="admin_id" />
+        <result column="admin_name" property="admin_name" />
+        <result column="admin_nickname" property="admin_nickname" />
+        <result column="admin_password" property="admin_password" />
+        <result column="admin_profile_picture_src" property="admin_profile_picture_src" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        admin_id, admin_name, admin_nickname, admin_password, admin_profile_picture_src
+    </sql>
+
+</mapper>
