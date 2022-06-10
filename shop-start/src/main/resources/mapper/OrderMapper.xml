@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.pojo.Order">
+        <id column="id" property="id" />
+        <result column="order_code" property="order_code" />
+        <result column="order_reciever" property="order_reciever" />
+        <result column="order_mobile" property="order_mobile" />
+        <result column="order_createtime" property="order_createtime" />
+        <result column="order_paytime" property="order_paytime" />
+        <result column="order_statu" property="order_statu" />
+        <result column="user_id" property="user_id" />
+        <result column="user_id" property="order_remark" />
+        <result column="user_id" property="product_price" />
+        <result column="user_id" property="product_count" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_code, order_reciever, order_mobile, order_createtime, order_paytime, order_statu, user_id
+    </sql>
+
+</mapper>

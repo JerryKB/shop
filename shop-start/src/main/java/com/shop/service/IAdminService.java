@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
  *  服务类
  * </p>
  *
- * @author JerryKB
- * @since 2022-06-10
+ * @author Wyx
+ * @since 2022-06-14
  */
 public interface IAdminService extends IService<Admin> {
     RespBean login(String username, String password, HttpServletRequest request);

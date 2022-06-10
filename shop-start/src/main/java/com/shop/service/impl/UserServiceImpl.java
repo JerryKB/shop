@@ -1,12 +1,12 @@
 package com.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.shop.config.securityConfig.JWTTokenUtil;
-import com.shop.pojo.Admin;
 import com.shop.mapper.AdminMapper;
-import com.shop.pojo.RespBean;
-import com.shop.pojo.UserLogin;
-import com.shop.service.IAdminService;
+import com.shop.pojo.*;
+import com.shop.mapper.UserMapper;
+import com.shop.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ import java.util.Map;
  * @since 2022-06-14
  */
 @Service
-public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements IAdminService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -40,13 +42,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Value("${jwt.tokenHead}")
     private String tokenHead;
     @Autowired
-    private AdminMapper adminMapper;
+    private UserMapper userMapper;
 
     @Override
     public RespBean login(String username, String password, HttpServletRequest request) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         System.out.println(userDetails.getPassword());
-        System.out.println(userDetails.getUsername());
         if (null == userDetails || !passwordEncoder.matches(password, userDetails.getPassword())) {
             return RespBean.error("用户名或密码不正确");
         }
@@ -66,18 +67,38 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public Admin getUserByUserName(String username) {
-
-        Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username));
-        return admin;
+    public User getUserByUserName(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
+        return userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
     }
 
     @Override
-    public RespBean registry(UserLogin userLogin) {
-        Admin admin = new Admin();
-        admin.setUsername(userLogin.getUsername());
-        admin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
-        int insert = adminMapper.insert(admin);
-        return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
+    public RespBean registry(User user,String code,HttpServletRequest httpServletRequest) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (code==httpServletRequest.getSession().getAttribute("checkCode"))
+        {
+            int insert = userMapper.insert(user);
+            return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
+        }
+        else
+            return RespBean.error("验证码错误");
     }
+
+    @Override
+    public RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest)  {
+        Map map = new HashMap<>();
+        map.put("email",user.getEmail());
+        User select = userMapper.selectOne(new QueryWrapper<User>().eq("email",user.getEmail()));
+        if (select ==null)
+            return RespBean.error("邮箱不存在，请重新输入");
+        if (code==httpServletRequest.getSession().getAttribute("checkCode"))
+        {
+            int update = userMapper.update(user,new UpdateWrapper<User>().eq("email",user.getEmail()));
+            return update>0 ?  RespBean.success("修改成功"): RespBean.error("修改失败,请更换密码");
+        }
+        else
+            return RespBean.error("验证码错误");
+    }
+
 }
