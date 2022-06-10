@@ -64,9 +64,8 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
 
     @Override
     public TbUser getUserByUserName(String username) {
-        TbUser username1 = tbUserMapper.selectOne(new QueryWrapper<TbUser>().eq("username", username));
-        System.out.println(username1);
-        return username1;
+        return tbUserMapper.selectOne(new QueryWrapper<TbUser>().eq("username", username));
+
     }
 
     @Override
