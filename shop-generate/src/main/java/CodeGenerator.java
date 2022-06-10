@@ -12,13 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * 功能: 代码生成器  --层
- * @Program: yeb
- * @Date: 2021-11-12 10:34
- * @Version 1.0
- * @Author Jiayu.Yang
- */
 public class CodeGenerator {
 
     /**
@@ -47,8 +40,8 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/shop-generate/src/main/java"); //在那个目录下生成
-        gc.setAuthor("Jiayu.Yang");//设置开发者名
+        gc.setOutputDir(projectPath + "/shop-start/src/main/java"); //在那个目录下生成
+        gc.setAuthor("JerryKB");//设置开发者名
         gc.setOpen(false);//是否打开输出目录
         gc.setSwagger2(true);  //添加实体属性 Swagger2 注解
         gc.setBaseColumnList(true);//xml 开启BaseColumnList
@@ -57,9 +50,9 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/mp?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/tmalldemodb?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8");
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("1234");
         mpg.setDataSource(dsc);
@@ -67,7 +60,7 @@ public class CodeGenerator {
         // 要生成的包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.cop")         //父路径
+        pc.setParent("com.shop")         //父路径
                 .setMapper("mapper")            //mapper层文件存放位置
                 .setService("service")          //service接口层文件存放位置
                 .setEntity("pojo")              //dao层文件存放位置
@@ -95,7 +88,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/shop-generate/src/main/resources/mapper/" + pc.getModuleName()
+                return projectPath + "/shop-start/src/main/resources/mapper/" + pc.getModuleName()
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
@@ -147,7 +140,7 @@ public class CodeGenerator {
         strategy.setControllerMappingHyphenStyle(true);
 
         //表的前缀
-        strategy.setTablePrefix(pc.getModuleName() + "t_");
+        strategy.setTablePrefix(pc.getModuleName() + "tb_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
