@@ -1,4 +1,4 @@
-package com.shop.config;
+package com.shop.config.securityConfig;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

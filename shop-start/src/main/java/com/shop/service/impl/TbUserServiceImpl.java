@@ -2,7 +2,7 @@ package com.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.shop.config.JWTTokenUtil;
+import com.shop.config.securityConfig.JWTTokenUtil;
 import com.shop.mapper.TbUserMapper;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.TbUser;
