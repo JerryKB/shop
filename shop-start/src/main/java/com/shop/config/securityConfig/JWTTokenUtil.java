@@ -22,6 +22,7 @@ public class JWTTokenUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    //生成token
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
@@ -29,7 +30,7 @@ public class JWTTokenUtil {
         return generateToken(claims);
     }
 
-
+    //添加主体
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -38,11 +39,12 @@ public class JWTTokenUtil {
                 .compact();
     }
 
+    //设置过期时间
     private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
 
-
+    //从token中获取用户名
     public String getUsernameFromToken(String token) {
         String username;
         try {
@@ -54,6 +56,7 @@ public class JWTTokenUtil {
         return username;
     }
 
+    //从token中获取主体
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
@@ -67,23 +70,25 @@ public class JWTTokenUtil {
         return claims;
     }
 
+    //验证token是否失效
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = getUsernameFromToken(token);
         return username != null && username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
+    //验证token是否过期
     private boolean isTokenExpired(String token) {
 
         Date expireDate = getExpiredDateFromToken(token);
         return expireDate.before(new Date());
     }
 
-
+    //验证token是否可以被刷新
     public boolean canRefresh(String token) {
         return !isTokenExpired(token);
     }
 
-
+    //刷新token
     public String refreshToken(String token) {
         Claims claims = getClaimsFromToken(token);
         claims.put(CLAIM_KEY_CREATED, new Date());
@@ -91,6 +96,7 @@ public class JWTTokenUtil {
     }
 
 
+    //获取过期时间
     private Date getExpiredDateFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
         return claims.getExpiration();

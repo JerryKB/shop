@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    //对路径进行放行
     @Override
     public void configure(WebSecurity web) throws Exception {
 
@@ -48,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
     }
 
+    //关闭csrf
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -57,8 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/login", "/logout")
-//                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .headers()
@@ -81,10 +81,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             return null;
         };
     }
+
+    //注入加密类
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+    //注入jwt过滤器
     @Bean
     public JWTAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
         return new JWTAuthenticationTokenFilter();
