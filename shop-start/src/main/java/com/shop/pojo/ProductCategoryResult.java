@@ -42,4 +42,12 @@ public class ProductCategoryResult implements Serializable {
 
     private Integer pid1;
 
+    private Integer id2;
+
+    private String name2;
+
+    private Integer status2;
+
+    private Integer pid2;
+
 }

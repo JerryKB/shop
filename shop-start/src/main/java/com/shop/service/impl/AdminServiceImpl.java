@@ -26,8 +26,8 @@ import java.util.Map;
  *  服务实现类
  * </p>
  *
- * @author JerryKB
- * @since 2022-06-10
+ * @author Wyx
+ * @since 2022-06-14
  */
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements IAdminService {
@@ -40,16 +40,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Value("${jwt.tokenHead}")
     private String tokenHead;
     @Autowired
-    private  AdminMapper adminMapper;
+    private AdminMapper adminMapper;
 
     @Override
     public RespBean login(String username, String password, HttpServletRequest request) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         System.out.println(userDetails.getPassword());
-        if (null==userDetails||!passwordEncoder.matches(password,userDetails.getPassword())){
+        System.out.println(userDetails.getUsername());
+        if (null == userDetails || !passwordEncoder.matches(password, userDetails.getPassword())) {
             return RespBean.error("用户名或密码不正确");
         }
-        if (!userDetails.isEnabled()){
+        if (!userDetails.isEnabled()) {
             return RespBean.error("帐户被禁用");
         }
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -59,22 +60,26 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+
+
+        request.getSession().setAttribute("username",username);
         System.out.println(token);
-        return RespBean.success("登录成功",tokenMap);
+        return RespBean.success("登录成功", tokenMap);
     }
 
     @Override
     public Admin getUserByUserName(String username) {
-        Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("admin_name", username));
-        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("admin_name",username));
+
+        Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username));
+        return admin;
     }
+
     @Override
     public RespBean registry(UserLogin userLogin) {
         Admin admin = new Admin();
-        admin.setAdmin_name(userLogin.getUsername());
-        admin.setAdmin_password(passwordEncoder.encode(userLogin.getPassword()));
+        admin.setUsername(userLogin.getUsername());
+        admin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
         int insert = adminMapper.insert(admin);
-        return insert>0?RespBean.success("注册成功"):RespBean.error("注册失败");
+        return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
     }
-
 }
