@@ -37,7 +37,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     ProductCategoryMapper productCategoryMapper;
 
     @Override
-    public List<ProductCategoryResult> showAllCategory(HttpServletRequest httpServletRequest) {
+    public List<ProductCategory> showAllCategory(HttpServletRequest httpServletRequest) {
         return productCategoryMapper.showAll();
     }
 

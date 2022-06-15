@@ -39,4 +39,5 @@ public class ProductCategory implements Serializable {
     private Integer pid;
 
     private Integer level;
+    private List<ProductCategory> children;
 }

@@ -17,5 +17,5 @@ import java.util.List;
  */
 @Repository
 public interface ProductCategoryMapper extends BaseMapper<ProductCategory> {
-    public List<ProductCategoryResult> showAll();
+    public List<ProductCategory> showAll();
 }

@@ -35,7 +35,7 @@ public class ProductCategoryController {
     IProductCategoryService productCategoryService;
 
     @GetMapping("/getInfo")
-    public List<ProductCategoryResult> showAllCategory(HttpServletRequest httpServletRequest){
+    public List<ProductCategory> showAllCategory(HttpServletRequest httpServletRequest){
         return productCategoryService.showAllCategory(httpServletRequest);
     }
 

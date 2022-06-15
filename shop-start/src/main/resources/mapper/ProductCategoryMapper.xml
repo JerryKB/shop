@@ -9,28 +9,30 @@
         <result column="status" property="status" />
         <result column="pid" property="pid" />
     </resultMap>
+    <resultMap id="menu" type="com.shop.pojo.ProductCategory" extends="BaseResultMap">
+        <collection property="children" ofType="com.shop.pojo.ProductCategory">
+            <id column="id1" property="id"></id>
+            <id column="name1" property="name"></id>
+            <id column="level1" property="level"></id>
+            <id column="status1" property="status"></id>
+            <collection property="children" ofType="com.shop.pojo.ProductCategory">
+                <id column="id2" property="id"></id>
+                <id column="name2" property="name"></id>
+                <id column="level2" property="level"></id>
+                <id column="status2" property="status"></id>
+            </collection>
+        </collection>
+    </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, status, pid
     </sql>
 
-    <select id="showAll" resultType="com.shop.pojo.ProductCategoryResult">
-        SELECT
-        cate1.id as id,
-        cate1.name as name,
-        cate1.status as status,
-        cate1.pid as pid,
-        cate2.id as id1,
-        cate2.name as name1,
-        cate2.status as status1,
-        cate2.pid as pid1
-        cate3.id as id2,
-        cate3.name as name2,
-        cate3.status as status2,
-        cate3.pid as pid2
-         FROM tb_product_category cate1 inner JOIN tb_product_category cate2 inner join tb_product_category cate3 on
-            cate1.id = cate2.pid and cate3.pid = cate2.id;
+    <select id="showAll" resultType="list" resultMap="menu">
+       select t1.id as id ,t1.name as name,t1.level as level,t1.status as status,t2.id as id1, t2.name as name1,t2.level as level1,t2.status as status1,t3.id as id2,t3.name as name2,t3.level as level2,t3.status as status3
+       from tb_product_category t1,tb_product_category t2,tb_product_category t3
+       where t1.id=t2.pid and t2.id=t3.pid
     </select>
 
 </mapper>

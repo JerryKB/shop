@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public interface IProductCategoryService extends IService<ProductCategory> {
-    List<ProductCategoryResult> showAllCategory(HttpServletRequest httpServletRequest);
+    List<ProductCategory> showAllCategory(HttpServletRequest httpServletRequest);
     IPage<ProductCategory> find(ProductCategory productCategory, Integer currentPage, Integer Size);
     RespBean update(ProductCategory productCategory);
     RespBean delete(ProductCategory productCategory);

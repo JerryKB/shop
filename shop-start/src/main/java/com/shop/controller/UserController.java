@@ -8,11 +8,7 @@ import com.shop.pojo.UserLogin;
 import com.shop.service.IAdminService;
 import com.shop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +28,7 @@ public class UserController {
     @Autowired
     IUserService UserService;
     @PostMapping("/login")
-    public RespBean login(UserLogin userLogin, HttpServletRequest request) {
+    public RespBean login(@RequestBody  UserLogin userLogin, HttpServletRequest request) {
         return UserService.login(userLogin.getUsername(), userLogin.getPassword(),request);
     }
     @GetMapping("/getInfo")
@@ -48,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/registry")
-    public RespBean registry(User user,String code,HttpServletRequest httpServletRequest){
+    public RespBean registry(@RequestBody User user, String code, HttpServletRequest httpServletRequest){
         return UserService.registry(user,code,httpServletRequest);
     }
 
