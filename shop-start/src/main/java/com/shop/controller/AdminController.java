@@ -30,6 +30,7 @@ public class AdminController {
     IAdminService adminService;
     @PostMapping("/login")
     public RespBean login(UserLogin userLogin, HttpServletRequest request) {
+        System.out.println(userLogin);
         return adminService.login(userLogin.getUsername(), userLogin.getPassword(),request);
     }
     @GetMapping("/getInfo")
