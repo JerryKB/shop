@@ -6,11 +6,7 @@ import com.shop.pojo.RespBean;
 import com.shop.pojo.UserLogin;
 import com.shop.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -29,7 +25,7 @@ public class AdminController {
     @Autowired
     IAdminService adminService;
     @PostMapping("/login")
-    public RespBean login(UserLogin userLogin, HttpServletRequest request) {
+    public RespBean login(@RequestBody UserLogin userLogin, HttpServletRequest request) {
         return adminService.login(userLogin.getUsername(), userLogin.getPassword(),request);
     }
     @GetMapping("/getInfo")
@@ -45,7 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/registry")
-    public RespBean registry(UserLogin userLogin){
+    public RespBean registry(@RequestBody UserLogin userLogin){
         return adminService.registry(userLogin);
     }
 }

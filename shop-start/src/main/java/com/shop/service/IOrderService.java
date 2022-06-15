@@ -1,7 +1,9 @@
 package com.shop.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,8 @@ import java.util.List;
  */
 public interface IOrderService extends IService<Order> {
     Order findOne(Order order, HttpServletRequest httpServletRequest);
-    List<Order> findAll(Order order, HttpServletRequest httpServletRequest);
+    IPage<Order> findOrder(Order order, Integer Current, Integer Size, HttpServletRequest httpServletRequest);
     String saveOrder(Shopcar shopcar,String order_receiver,Integer order_mobile,String order_remark);
+    RespBean update(Order order);
+    RespBean delete(Order order);
 }

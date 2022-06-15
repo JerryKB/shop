@@ -1,10 +1,9 @@
 package com.shop.service;
 
-import com.shop.pojo.Admin;
-import com.shop.pojo.RespBean;
-import com.shop.pojo.User;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.shop.pojo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.shop.pojo.UserLogin;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,5 +25,13 @@ public interface IUserService extends IService<User> {
     RespBean registry(User user,String code,HttpServletRequest httpServletRequest);
 
     RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest);
+
+    RespBean addUser(User user);
+
+    RespBean updateUser(User user);
+
+    RespBean deleteUser(User user);
+
+    IPage<User> findUser(User user, Integer Current, Integer Size);
 
 }

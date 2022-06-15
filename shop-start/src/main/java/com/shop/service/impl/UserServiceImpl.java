@@ -2,6 +2,8 @@ package com.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shop.config.securityConfig.JWTTokenUtil;
 import com.shop.mapper.AdminMapper;
 import com.shop.pojo.*;
@@ -99,6 +101,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         else
             return RespBean.error("验证码错误");
+    }
+
+    @Override
+    public RespBean addUser(User user) {
+        return null;
+    }
+
+    @Override
+    public RespBean updateUser(User user) {
+        int insert = userMapper.insert(user);
+        return insert>0 ?  RespBean.success("新增成功"): RespBean.error("新增失败");
+    }
+
+    @Override
+    public RespBean deleteUser(User user) {
+        int delete = userMapper.delete(new QueryWrapper<User>().eq("id",user.getId()));
+        return delete>0 ?  RespBean.success("删除成功"): RespBean.error("删除失败");
+    }
+
+    @Override
+    public IPage<User> findUser(User user, Integer Current, Integer Size) {
+        int current = 1,size=10;
+        if (Current!=null)
+            current = Current;
+        if (Size!=null)
+            size=Size;
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("username",user.getUsername());
+        IPage<User> userIPage = userMapper.selectPage(new Page<>(current,size),queryWrapper);
+        return userIPage;
     }
 
 }

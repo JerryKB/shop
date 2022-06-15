@@ -40,7 +40,7 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/find")
-    public IPage<ProductCategory> find(ProductCategory productCategory, Integer currentPage, Integer Size, HttpServletRequest httpServletRequest){
+    public IPage<ProductCategory> find(@RequestBody ProductCategory productCategory, Integer currentPage, Integer Size, HttpServletRequest httpServletRequest){
         return productCategoryService.find(productCategory,currentPage,Size);
     }
 

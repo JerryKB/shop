@@ -37,12 +37,12 @@ public class ProductController {
     }
 
     @GetMapping("/find")
-    public IPage<Product> find(Product product, Integer currentPage, Integer Size, HttpServletRequest httpServletRequest){
+    public IPage<Product> find(@RequestBody Product product, Integer currentPage, Integer Size, HttpServletRequest httpServletRequest){
         return productService.find(product,currentPage,Size);
     }
 
     @GetMapping("update")
-    public RespBean update(Product product,@RequestBody MultipartFile file) throws IOException {
+    public RespBean update(@RequestBody Product product,@RequestBody MultipartFile file) throws IOException {
         return productService.update(product,file);
     }
 
