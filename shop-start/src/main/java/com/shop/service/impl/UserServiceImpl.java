@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shop.config.securityConfig.JWTTokenUtil;
-import com.shop.mapper.AdminMapper;
 import com.shop.pojo.*;
 import com.shop.mapper.UserMapper;
 import com.shop.service.IUserService;
@@ -22,9 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper userMapper;
 
+
     @Override
     public RespBean login(String username, String password, HttpServletRequest request) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -61,10 +60,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
+        System.out.println(userDetails);
         String token = jwtTokenUtil.generateToken(userDetails);
-        Map<String, String> tokenMap = new HashMap<>();
+        Map<String, Object> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+        tokenMap.put("info",userDetails);
         request.getSession().setAttribute("username",username);
         System.out.println(token);
         return RespBean.success("登录成功", tokenMap);
@@ -78,32 +79,55 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public RespBean registry(User user,String code,HttpServletRequest httpServletRequest) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (code==httpServletRequest.getSession().getAttribute("checkCode"))
-        {
-            int insert = userMapper.insert(user);
-            return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
+    public RespBean registry(UserBean userBean) {
+
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        if (code==httpServletRequest.getSession().getAttribute("checkCode"))
+//        {
+//            int insert = userMapper.insert(user);
+//            return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
+//        }
+//        else
+//            return RespBean.error("验证码错误");
+        List<User> users = userMapper.selectList(null);
+        for (User user : users) {
+            if (user.getUsername().equals(userBean.getUsername())){
+                return RespBean.error("用户名已存在");
+            }
         }
-        else
-            return RespBean.error("验证码错误");
+        String password = (passwordEncoder.encode(userBean.getPassword()));
+        User user=new User(userBean.getUsername(),password, userBean.getReal_name(), userBean.getEmail());
+        int insert =userMapper.insert(user);
+        return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
     }
 
     @Override
-    public RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest)  {
-        Map map = new HashMap<>();
-        map.put("email",user.getEmail());
-        User select = userMapper.selectOne(new QueryWrapper<User>().eq("email",user.getEmail()));
-        if (select ==null)
-            return RespBean.error("邮箱不存在，请重新输入");
-        if (code==httpServletRequest.getSession().getAttribute("checkCode"))
-        {
-            int update = userMapper.update(user,new UpdateWrapper<User>().eq("email",user.getEmail()));
-            return update>0 ?  RespBean.success("修改成功"): RespBean.error("修改失败,请更换密码");
+    public RespBean forgetPwd(UserBean userBean, String code, HttpServletRequest httpServletRequest)  {
+        User user1 = userMapper.selectOne(new QueryWrapper<User>().eq("username", userBean.getUsername()));
+        if (user1.getEmail().equals(userBean.getEmail())){
+            if (code.toUpperCase().equals(httpServletRequest.getSession().getAttribute("checkCode")))
+            {
+                user1.setPassword(passwordEncoder.encode(userBean.getPassword()));
+                int update = userMapper.update(user1,new UpdateWrapper<User>().eq("email",userBean.getEmail()));
+                return update>0 ?  RespBean.success("修改成功"): RespBean.error("修改失败,请更换密码");
+            }
+            else{
+                return RespBean.error("验证码错误");
+            }
         }
-        else
-            return RespBean.error("验证码错误");
+
+        if (user1 ==null)
+            return RespBean.error("该用户不存在，请重新输入");
+        if (!user1.getEmail().equals(userBean.getEmail())){
+            return RespBean.error("该邮箱与用户名不匹配，请重新输入");
+        }
+        return RespBean.error("未知错误,请联系管理员");
+
+
     }
+
+
+
     //分页
     @Override
     public IPage<User> getPage(int current, int querrywrapper, User user) {

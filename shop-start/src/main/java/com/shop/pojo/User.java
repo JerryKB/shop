@@ -1,9 +1,12 @@
 package com.shop.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Collection;
 
+import com.sun.org.apache.bcel.internal.generic.IDIV;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@Accessors(chain = true)
 @TableName("tb_user")
 @ApiModel(value="User对象", description="")
 public class User implements Serializable, UserDetails {
@@ -30,6 +33,7 @@ public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户id")
+    @TableId(type= IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty(value = "用户名")
@@ -44,6 +48,12 @@ public class User implements Serializable, UserDetails {
     @ApiModelProperty(value = "邮箱账号")
     private String email;
 
+    public User(String username, String password, String real_name, String email) {
+        this.username = username;
+        this.password = password;
+        this.real_name = real_name;
+        this.email = email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -2,18 +2,12 @@ package com.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shop.controller.Model.R;
-import com.shop.pojo.Admin;
-import com.shop.pojo.RespBean;
-import com.shop.pojo.User;
-import com.shop.pojo.UserLogin;
-import com.shop.service.IAdminService;
+import com.shop.pojo.*;
 import com.shop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 /**
@@ -30,7 +24,7 @@ public class UserController {
     @Autowired
     IUserService UserService;
     @PostMapping("/login")
-    public RespBean login(UserLogin userLogin, HttpServletRequest request) {
+    public RespBean login(@RequestBody UserLogin userLogin, HttpServletRequest request) {
         return UserService.login(userLogin.getUsername(), userLogin.getPassword(),request);
     }
     @GetMapping("/getInfo")
@@ -46,13 +40,13 @@ public class UserController {
     }
 
     @PostMapping("/registry")
-    public RespBean registry(User user,String code,HttpServletRequest httpServletRequest){
-        return UserService.registry(user,code,httpServletRequest);
+    public RespBean registry(@RequestBody UserBean userBean){
+        return UserService.registry(userBean);
     }
 
     @PostMapping("/forgetPwd")
-    public RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest){
-        return UserService.forgetPwd(user,code,httpServletRequest);
+    public RespBean forgetPwd(UserBean userBean, String code, HttpServletRequest httpServletRequest){
+        return UserService.forgetPwd(userBean,code,httpServletRequest);
     }
     //获取分页信息
     @GetMapping("/{current}/{querrywrapper}")

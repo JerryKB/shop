@@ -1,11 +1,9 @@
 package com.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shop.pojo.Admin;
-import com.shop.pojo.RespBean;
-import com.shop.pojo.User;
+import com.shop.pojo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.shop.pojo.UserLogin;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,9 +22,10 @@ public interface IUserService extends IService<User> {
 
     User getUserByUserName(String username);
 
-    RespBean registry(User user,String code,HttpServletRequest httpServletRequest);
+    RespBean registry(UserBean userBean);
 
-    RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest);
+    RespBean forgetPwd(UserBean userBean, String code, HttpServletRequest httpServletRequest);
+
     //获取分页
     IPage<User> getPage(int current, int querrywrapper, User user);
     //判断类型修改

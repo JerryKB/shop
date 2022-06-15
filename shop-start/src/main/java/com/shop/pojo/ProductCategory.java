@@ -1,6 +1,7 @@
 package com.shop.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -39,5 +40,6 @@ public class ProductCategory implements Serializable {
     private Integer pid;
 
     private Integer level;
+    @TableField(exist = false)
     private List<ProductCategory> children;
 }
