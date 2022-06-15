@@ -10,6 +10,7 @@
         <result column="head_src" property="head_src" />
     </resultMap>
 
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, username, password, head_src

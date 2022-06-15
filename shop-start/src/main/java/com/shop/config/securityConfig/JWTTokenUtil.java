@@ -32,7 +32,7 @@ public class JWTTokenUtil {
 
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
-                .setClaims(claims)
+                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
