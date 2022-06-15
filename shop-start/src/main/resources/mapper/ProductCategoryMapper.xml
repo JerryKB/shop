@@ -25,8 +25,12 @@
         cate2.name as name1,
         cate2.status as status1,
         cate2.pid as pid1
-         FROM tb_product_category cate1 inner JOIN tb_product_category cate2 on
-            cate1.id = cate2.pid;
+        cate3.id as id2,
+        cate3.name as name2,
+        cate3.status as status2,
+        cate3.pid as pid2
+         FROM tb_product_category cate1 inner JOIN tb_product_category cate2 inner join tb_product_category cate3 on
+            cate1.id = cate2.pid and cate3.pid = cate2.id;
     </select>
 
 </mapper>
