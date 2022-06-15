@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
 import com.shop.service.IOrderService;
@@ -33,8 +34,8 @@ public class ShopcarController {
     @Autowired
     IOrderService orderService;
     @GetMapping("/showALl")
-    public List<Shopcar> findAll(HttpServletRequest httpServletRequest){
-        return shopcarService.findAll(httpServletRequest);
+    public IPage<Shopcar> findAll(Integer CurrentPage,Integer Size,HttpServletRequest httpServletRequest){
+        return shopcarService.findAll(CurrentPage,Size,httpServletRequest);
     }
     @GetMapping("transferOrder")
     public void transfer(@RequestBody Shopcar shopcar, String order_receiver, Integer order_mobile, String order_remark, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
