@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+//鉴权时进入
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
@@ -19,7 +21,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         RespBean respBean = RespBean.error("权限不足");
-
         respBean.setCode(401);
         out.write(new ObjectMapper().writeValueAsString(respBean));
         out.flush();

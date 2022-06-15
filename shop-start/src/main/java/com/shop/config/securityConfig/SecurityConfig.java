@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 
+    //重写UserDetailsService
     @Override
     @Bean
     public UserDetailsService userDetailsService() {

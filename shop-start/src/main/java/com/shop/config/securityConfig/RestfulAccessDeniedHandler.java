@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+//拒绝访问
 @Component
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
 
