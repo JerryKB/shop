@@ -41,7 +41,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/shop-start/src/main/java"); //在那个目录下生成
-        gc.setAuthor("JerryKB");//设置开发者名
+        gc.setAuthor("Wyx");//设置开发者名
         gc.setOpen(false);//是否打开输出目录
         gc.setSwagger2(true);  //添加实体属性 Swagger2 注解
         gc.setBaseColumnList(true);//xml 开启BaseColumnList
@@ -50,11 +50,11 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/tmalldemodb?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/shop?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8");
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("1234");
+        dsc.setPassword("123456");
         mpg.setDataSource(dsc);
 
         // 要生成的包配置

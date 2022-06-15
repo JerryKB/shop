@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ShopcarMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.pojo.Shopcar">
+        <id column="id" property="id" />
+        <result column="product_num" property="product_num" />
+        <result column="product_id" property="product_id" />
+        <result column="products_price" property="products_price" />
+        <result column="order_address" property="order_address" />
+        <result column="user_id" property="user_id" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, product_num, product_id, products_price, order_address, user_id
+    </sql>
+
+</mapper>

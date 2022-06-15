@@ -1,6 +1,6 @@
 package com.shop.mapper;
 
-import com.shop.pojo.Admin;
+import com.shop.pojo.Shopcar;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2022-06-14
  */
 @Repository
-public interface AdminMapper extends BaseMapper<Admin> {
+public interface ShopcarMapper extends BaseMapper<Shopcar> {
 
 }

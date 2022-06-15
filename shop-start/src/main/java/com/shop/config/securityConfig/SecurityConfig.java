@@ -1,7 +1,9 @@
 package com.shop.config.securityConfig;
 
 import com.shop.pojo.Admin;
+import com.shop.pojo.User;
 import com.shop.service.IAdminService;
+import com.shop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private IAdminService iAdminService;
     @Autowired
+    private IUserService iUserService;
+    @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
@@ -36,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         web.ignoring().antMatchers(
+                "/**/**",
                 "/admin/login",
                 "/admin/registry",
                 "/css/**",
@@ -45,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/doc.html",
                 "/webjars/**",
                 "/swagger-resources/**",
-                "/v2/api-docs/**"
+                "/v2/api-docs/**",
+                "/**"
         );
     }
 
@@ -76,8 +82,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return username->{
             Admin admin = iAdminService.getUserByUserName(username);
+            User user =iUserService.getUserByUserName(username);
             if (null!=admin){
                 return admin;
+            }
+            else if (null!=user){
+                return user;
             }
             return null;
         };

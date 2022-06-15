@@ -1,7 +1,5 @@
 package com.shop.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,40 +23,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tb_admin")
-@ApiModel(value="Admin对象", description="")
-public class Admin implements Serializable, UserDetails {
+@TableName("tb_user")
+@ApiModel(value="User对象", description="")
+public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "管理员id")
-    @TableId(type=IdType.AUTO)
+    @ApiModelProperty(value = "用户id")
     private Integer id;
 
-    @ApiModelProperty(value = "管理员用户名")
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "管理员密码")
+    @ApiModelProperty(value = "密码")
     private String password;
 
-    @ApiModelProperty(value = "头像")
-    private String head_src;
+    @ApiModelProperty(value = "真实姓名")
+    private String real_name;
+
+    @ApiModelProperty(value = "邮箱账号")
+    private String email;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override

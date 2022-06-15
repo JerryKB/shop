@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ProductCategoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.pojo.ProductCategory">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="status" property="status" />
+        <result column="pid" property="pid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, status, pid
+    </sql>
+
+    <select id="showAll" resultType="com.shop.pojo.ProductCategoryResult">
+        SELECT
+        cate1.id as id,
+        cate1.name as name,
+        cate1.status as status,
+        cate1.pid as pid,
+        cate2.id as id1,
+        cate2.name as name1,
+        cate2.status as status1,
+        cate2.pid as pid1
+         FROM tb_product_category cate1 inner JOIN tb_product_category cate2 on
+            cate1.id = cate2.pid;
+    </select>
+
+</mapper>
