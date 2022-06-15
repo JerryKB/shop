@@ -60,6 +60,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+
+
         request.getSession().setAttribute("username",username);
         System.out.println(token);
         return RespBean.success("登录成功", tokenMap);
