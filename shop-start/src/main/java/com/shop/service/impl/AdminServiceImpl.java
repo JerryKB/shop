@@ -1,10 +1,14 @@
 package com.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shop.config.securityConfig.JWTTokenUtil;
+import com.shop.mapper.UserMapper;
 import com.shop.pojo.Admin;
 import com.shop.mapper.AdminMapper;
 import com.shop.pojo.RespBean;
+import com.shop.pojo.User;
 import com.shop.pojo.UserLogin;
 import com.shop.service.IAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -41,7 +45,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private String tokenHead;
     @Autowired
     private AdminMapper adminMapper;
-
+    @Autowired
+    private UserMapper userMapper;
     @Override
     public RespBean login(String username, String password, HttpServletRequest request) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -82,4 +87,35 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         int insert = adminMapper.insert(admin);
         return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
     }
+    @Override
+    public RespBean addUser(User user) {
+        int insert = userMapper.insert(user);
+        return insert>0 ?  RespBean.success("新增成功"): RespBean.error("新增失败");
+    }
+
+    @Override
+    public RespBean updateUser(User user) {
+        int insert = userMapper.update(user,new QueryWrapper<User>().eq("id",user.getId()));
+        return insert>0 ?  RespBean.success("更新成功"): RespBean.error("更新失败");
+    }
+
+    @Override
+    public RespBean deleteUser(User user) {
+        int delete = userMapper.delete(new QueryWrapper<User>().eq("id",user.getId()));
+        return delete>0 ?  RespBean.success("删除成功"): RespBean.error("删除失败");
+    }
+
+    @Override
+    public IPage<User> findUser(User user, Integer Current, Integer Size) {
+        int current = 1,size=10;
+        if (Current!=null)
+            current = Current;
+        if (Size!=null)
+            size=Size;
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("username",user.getUsername());
+        IPage<User> userIPage = userMapper.selectPage(new Page<>(current,size),queryWrapper);
+        return userIPage;
+    }
+
 }

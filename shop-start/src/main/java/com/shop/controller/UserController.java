@@ -54,23 +54,7 @@ public class UserController {
         return UserService.forgetPwd(user,code,httpServletRequest);
     }
 
-    @GetMapping("/addUser")
-    public RespBean addUser(@RequestBody User user){
-        return UserService.addUser(user);
-    }
 
-    @GetMapping("/updateUser")
-    public RespBean updateUser(@RequestBody User user){
-        return UserService.updateUser(user);
-    }
-    @GetMapping("/deleteUser")
-    public RespBean deleteUser(@RequestBody User user){
-        return UserService.deleteUser(user);
-    }
-    @GetMapping("/findUser")
-    public IPage<User> findUser(@RequestBody User user, Integer Current, Integer Size, HttpServletRequest httpServletRequest){
-        return UserService.findUser(user,Current,Size);
-    }
 
 
 }

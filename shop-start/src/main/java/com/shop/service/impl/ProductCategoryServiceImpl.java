@@ -50,7 +50,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
 
     @Override
     public RespBean isEnable(ProductCategory productCategory){
-        int isEnable = productCategoryMapper.update(productCategory,new UpdateWrapper<ProductCategory>().eq("status",productCategory.getStatus()));
+        int isEnable = productCategoryMapper.update(productCategory,new UpdateWrapper<ProductCategory>().eq("id",productCategory.getId()));
         if (isEnable>0){
             return productCategory.getStatus()==0 ? RespBean.success("禁用成功"): RespBean.success("启用成功");
         }

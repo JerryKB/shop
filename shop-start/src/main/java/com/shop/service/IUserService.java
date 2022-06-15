@@ -26,12 +26,6 @@ public interface IUserService extends IService<User> {
 
     RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest);
 
-    RespBean addUser(User user);
 
-    RespBean updateUser(User user);
-
-    RespBean deleteUser(User user);
-
-    IPage<User> findUser(User user, Integer Current, Integer Size);
 
 }
