@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.Admin;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.User;
@@ -28,7 +29,7 @@ public class UserController {
     @Autowired
     IUserService UserService;
     @PostMapping("/login")
-    public RespBean login(@RequestBody  UserLogin userLogin, HttpServletRequest request) {
+    public RespBean login(@RequestBody UserLogin userLogin, HttpServletRequest request) {
         return UserService.login(userLogin.getUsername(), userLogin.getPassword(),request);
     }
     @GetMapping("/getInfo")
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/registry")
-    public RespBean registry(@RequestBody User user, String code, HttpServletRequest httpServletRequest){
+    public RespBean registry(User user,String code,HttpServletRequest httpServletRequest){
         return UserService.registry(user,code,httpServletRequest);
     }
 
@@ -52,5 +53,24 @@ public class UserController {
     public RespBean forgetPwd(User user, String code, HttpServletRequest httpServletRequest){
         return UserService.forgetPwd(user,code,httpServletRequest);
     }
+
+    @GetMapping("/addUser")
+    public RespBean addUser(@RequestBody User user){
+        return UserService.addUser(user);
+    }
+
+    @GetMapping("/updateUser")
+    public RespBean updateUser(@RequestBody User user){
+        return UserService.updateUser(user);
+    }
+    @GetMapping("/deleteUser")
+    public RespBean deleteUser(@RequestBody User user){
+        return UserService.deleteUser(user);
+    }
+    @GetMapping("/findUser")
+    public IPage<User> findUser(@RequestBody User user, Integer Current, Integer Size, HttpServletRequest httpServletRequest){
+        return UserService.findUser(user,Current,Size);
+    }
+
 
 }

@@ -26,7 +26,6 @@ public class AdminController {
     IAdminService adminService;
     @PostMapping("/login")
     public RespBean login(@RequestBody UserLogin userLogin, HttpServletRequest request) {
-        System.out.println(userLogin);
         return adminService.login(userLogin.getUsername(), userLogin.getPassword(),request);
     }
     @GetMapping("/getInfo")
@@ -42,7 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/registry")
-    public RespBean registry(UserLogin userLogin){
+    public RespBean registry(@RequestBody UserLogin userLogin){
         return adminService.registry(userLogin);
     }
 }

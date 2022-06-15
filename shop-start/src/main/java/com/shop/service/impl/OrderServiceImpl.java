@@ -1,14 +1,14 @@
 package com.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shop.controller.AdminController;
 import com.shop.controller.OrderController;
 import com.shop.controller.UserController;
-import com.shop.pojo.Admin;
-import com.shop.pojo.Order;
+import com.shop.pojo.*;
 import com.shop.mapper.OrderMapper;
-import com.shop.pojo.Shopcar;
-import com.shop.pojo.User;
 import com.shop.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +44,17 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return order1;
     }
 
-    //查询当前用户所有订单
+    //查询当前用户订单
     @Override
-    public List<Order> findAll(Order order, HttpServletRequest httpServletRequest) {
+    public IPage<Order> findOrder(Order order, Integer Current, Integer Size, HttpServletRequest httpServletRequest) {
+        int current = 1,size=10;
+        if (Current!=null)
+            current = Current;
+        if (Size!=null)
+            size=Size;
         QueryWrapper<Order> queryWrapper = new QueryWrapper<Order>();
-        List<Order> orders = orderMapper.selectList(queryWrapper.eq("user_id",httpServletRequest.getAttribute("username")));
+        queryWrapper.and(i->i.like("order_code",order.getOrder_code()).like("order_reciever",order.getOrder_reciever()));
+        IPage<Order> orders = orderMapper.selectPage(new Page<>(current,size),queryWrapper);
         return orders;
     }
 
@@ -68,4 +74,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         orderMapper.insert(order);
         return uuid;
     }
+
+    @Override
+    public RespBean update(Order order) {
+        int update = orderMapper.update(order,new UpdateWrapper<Order>().eq("order_code",order.getOrder_code()));
+        return update>0 ?  RespBean.success("更新成功"): RespBean.error("更新失败");
+    }
+
+    @Override
+    public RespBean delete(Order order) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("order_code", order.getOrder_code());
+        int delete = orderMapper.deleteByMap(map);
+        return delete>0 ?  RespBean.success("删除成功"): RespBean.error("删除失败");
+    }
+
+
 }

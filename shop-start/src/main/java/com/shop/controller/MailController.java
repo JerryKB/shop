@@ -5,10 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -34,7 +31,7 @@ public class MailController {
     private SimpleMailMessage simpleMailMessage;
     @ApiOperation(value = "邮箱验证码")
     @GetMapping(value = "/getInfo")
-    public static RespBean send(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public static RespBean send(@RequestBody String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.host","smtp.qq.com");
         properties.setProperty("mail.smtp.port","25");
@@ -43,15 +40,15 @@ public class MailController {
         session.setDebug(true);
         Transport transport = session.getTransport();
         transport.connect("smtp.qq.com","1584472908","mqxosqijjqvajhef");
-        Message message = createSimpleMail(request,response,session);
+        Message message = createSimpleMail(code,request,response,session);
         transport.sendMessage(message,message.getAllRecipients());
         transport.close();
         return RespBean.success("发送成功","");
     }
-    private static Message createSimpleMail(HttpServletRequest request, HttpServletResponse response,Session session) throws MessagingException {
+    private static Message createSimpleMail(String code,HttpServletRequest request, HttpServletResponse response,Session session) throws MessagingException {
         MimeMessage message = new MimeMessage(session);
         message.setFrom("1584472908@qq.com");
-        message.setRecipient(Message.RecipientType.TO,new InternetAddress("1584472908@qq.com"));
+        message.setRecipient(Message.RecipientType.TO,new InternetAddress(code));
         message.setSubject("注册验证");
         message.setSentDate(new Date());
         String str="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
