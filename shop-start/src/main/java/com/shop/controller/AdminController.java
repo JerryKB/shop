@@ -55,7 +55,7 @@ public class AdminController {
         return adminService.addUser(user);
     }
 
-    @GetMapping("/updateUser")
+    @PutMapping("/updateUser")
     public RespBean updateUser(@RequestBody User user){
         return adminService.updateUser(user);
     }
@@ -64,7 +64,7 @@ public class AdminController {
         return adminService.deleteUser(user);
     }
     @GetMapping("/findUser")
-    public IPage<User> findUser(@RequestBody User user, Integer Current, Integer Size, HttpServletRequest httpServletRequest){
+    public IPage<User> findUser(@RequestBody User user,@PathVariable Integer Current, @PathVariable Integer Size, HttpServletRequest httpServletRequest){
         return adminService.findUser(user,Current,Size);
     }
 }

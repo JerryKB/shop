@@ -1,5 +1,6 @@
 package com.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,6 +12,7 @@ import com.shop.pojo.*;
 import com.shop.mapper.OrderMapper;
 import com.shop.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +90,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         int delete = orderMapper.deleteByMap(map);
         return delete>0 ?  RespBean.success("删除成功"): RespBean.error("删除失败");
     }
+    //分页
+    @Override
+    public IPage<Order> getPage(int current, int querrywrapper, Order order) {
+        //条件查询构造器
+        LambdaQueryWrapper<Order> lmd =new LambdaQueryWrapper<Order>();
+        //lamda语句，like为条件匹配
+        lmd.like(Strings.isNotEmpty(order.getOrder_code()),Order::getOrder_code,order.getOrder_code());
+        lmd.like(Strings.isNotEmpty(order.getOrder_reciever()),Order::getOrder_reciever,order.getOrder_reciever());
+        IPage<Order> page = new Page<Order>(current,querrywrapper);
+        orderMapper.selectPage(page,lmd);
+        return page;
+    }
+    //修改
+    @Override
+    public Boolean modify(Order order) {
+        return orderMapper.updateById(order) > 0;
 
+    }
+    //    通过id删除
+    @Override
+    public Boolean deleteById(Integer id) {
+        return orderMapper.deleteById(id)>0;
+    }
 
 }

@@ -26,4 +26,10 @@ public interface IProductService extends IService<Product> {
     IPage<Product> find(Product product, Integer currentPage, Integer Size);
     RespBean update(Product product,@RequestBody MultipartFile file) throws IOException;
     RespBean delete(Product product);
+    //获取分页
+    IPage<Product> getPage(int current, int querrywrapper, Product product);
+    //判断类型修改
+    Boolean modify(Product product);
+    //根据id删除
+    Boolean deleteById(Integer id);
 }

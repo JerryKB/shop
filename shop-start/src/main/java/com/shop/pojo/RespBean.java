@@ -1,5 +1,6 @@
 package com.shop.pojo;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ public class RespBean {
     private long code;
     private String message;
     private Object obj;
+
+
 
 
     public static RespBean success(String message){

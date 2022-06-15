@@ -2,6 +2,8 @@ package com.shop.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Wyx
@@ -45,4 +47,7 @@ public class Product implements Serializable {
 
     @ApiModelProperty(value = "商品图片")
     private String img_src;
+
+    @ApiModelProperty(value = "商品价格")
+    private BigDecimal price;
 }

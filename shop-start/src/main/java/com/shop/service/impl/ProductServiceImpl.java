@@ -1,6 +1,7 @@
 package com.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,6 +11,7 @@ import com.shop.mapper.ProductMapper;
 import com.shop.pojo.RespBean;
 import com.shop.service.IProductService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -72,4 +74,30 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         int delete = productMapper.deleteByMap(map);
         return delete>0 ?  RespBean.success("删除成功"): RespBean.error("删除失败");
     }
+    //分页
+    @Override
+    public IPage<Product> getPage(int current, int querrywrapper, Product product) {
+        //条件查询构造器
+        LambdaQueryWrapper<Product> lmd = new LambdaQueryWrapper<Product>();
+        //lamda语句，like为条件匹配
+        lmd.like(Strings.isNotEmpty(product.getName()), Product::getName, product.getName());
+        lmd.like((product.getPrice().intValue()!=0), Product::getPrice, product.getPrice());
+        IPage<Product> page = new Page<Product>(current, querrywrapper);
+        productMapper.selectPage(page, lmd);
+        return page;
+    }
+
+    //修改
+    @Override
+    public Boolean modify(Product product) {
+        return productMapper.updateById(product) > 0;
+
+    }
+
+    //    通过id删除
+    @Override
+    public Boolean deleteById(Integer id) {
+        return productMapper.deleteById(id) > 0;
+    }
+
 }

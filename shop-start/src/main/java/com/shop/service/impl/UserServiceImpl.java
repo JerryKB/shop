@@ -1,5 +1,6 @@
 package com.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,6 +11,7 @@ import com.shop.pojo.*;
 import com.shop.mapper.UserMapper;
 import com.shop.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -102,8 +104,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         else
             return RespBean.error("验证码错误");
     }
+    //分页
+    @Override
+    public IPage<User> getPage(int current, int querrywrapper, User user) {
+        //条件查询构造器
+        LambdaQueryWrapper<User> lmd =new LambdaQueryWrapper<User>();
+        //lamda语句，like为条件匹配
+        lmd.like(Strings.isNotEmpty(user.getEmail()),User::getEmail,user.getEmail());
+        lmd.like(Strings.isNotEmpty(user.getUsername()),User::getUsername,user.getUsername());
+        lmd.like(Strings.isNotEmpty(user.getPassword()),User::getPassword,user.getPassword());
+        IPage<User> page = new Page<User>(current,querrywrapper);
+        userMapper.selectPage(page,lmd);
+        return page;
+    }
+    //修改
+    @Override
+    public Boolean modify(User user) {
+            return userMapper.updateById(user) > 0;
 
+    }
+//    通过id删除
+    @Override
+    public Boolean deleteById(Integer id) {
+        return userMapper.deleteById(id)>0;
+    }
 
-
+//    @Override
+//    public RespBean addUser(User user) {
+//        int insert = userMapper.insert(user);
+//        return insert>0 ?  RespBean.success("新增成功"): RespBean.error("新增失败");
+//    }
 }
 

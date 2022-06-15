@@ -3,15 +3,13 @@ package com.shop.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.shop.controller.Model.R;
 import com.shop.pojo.Product;
 import com.shop.pojo.RespBean;
 import com.shop.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +34,13 @@ public class ProductController {
         return productService.findRequirePro(category_id);
     }
 
-    @GetMapping("/find")
-    public IPage<Product> find(@RequestBody Product product, Integer currentPage, Integer Size, HttpServletRequest httpServletRequest){
-        return productService.find(product,currentPage,Size);
+    @GetMapping("/find/{currentPage}/{Size}")
+    public IPage<Product> find(@RequestBody Product product, @PathVariable Integer currentPage,@PathVariable Integer Size, HttpServletRequest httpServletRequest){
+        IPage<Product> productIPage=productService.getPage(currentPage,Size,product);
+        if(currentPage > productIPage.getPages()){
+            productIPage=productService.getPage((int) productIPage.getPages(),Size,product);
+        }
+        return productIPage;
     }
 
     @GetMapping("update")
@@ -49,5 +51,42 @@ public class ProductController {
     @GetMapping("/delete")
     public RespBean delete(Product product,HttpServletRequest request){
         return productService.delete(product);
+    }
+    //获取分页信息
+    @GetMapping("/{current}/{querrywrapper}")
+    public R getPage(@PathVariable int current, @PathVariable
+            int querrywrapper, Product product){
+        IPage<Product> productIPage=productService.getPage(current,querrywrapper,product);
+        if(current > productIPage.getPages()){
+            productIPage=productService.getPage((int) productIPage.getPages(),querrywrapper,product);
+        }
+        return new R(true,productIPage);
+    }
+    //通过id获取数据
+    @GetMapping("/getbyid/{id}")
+    public R getByid(@PathVariable Integer id){
+        Product productid=productService.getById(id);
+        return new R(true, productid);
+    }
+    //传对象修改数据
+    @PutMapping("/updateall")
+    public R update(@RequestBody Product product){
+        return new R(productService.modify(product));
+    }
+    //通过id删除数据
+    @DeleteMapping("/deletebyid/{id}")
+    public R delete(@PathVariable Integer id){
+        return new R(productService.deleteById(id));
+    }
+    //新增数据
+    @PostMapping
+    public R save(@RequestBody Product product){
+        boolean flag = productService.save(product);
+        return new R(flag,flag?"添加成功！":"添加失败！");
+    }
+    //修改switch
+    @PutMapping("/updateswitch")
+    public R updateSwitch(@RequestBody Product product){
+        return new R(productService.updateById(product));
     }
 }
