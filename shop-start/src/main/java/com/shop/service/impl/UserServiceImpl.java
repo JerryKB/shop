@@ -81,6 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             int insert = userMapper.insert(user);
             return insert > 0 ? RespBean.success("注册成功") : RespBean.error("注册失败");
         }
+//
         else
             return RespBean.error("验证码错误");
     }
