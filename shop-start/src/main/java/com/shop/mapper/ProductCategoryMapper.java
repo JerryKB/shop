@@ -2,7 +2,6 @@ package com.shop.mapper;
 
 import com.shop.pojo.ProductCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.shop.pojo.ProductCategoryResult;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

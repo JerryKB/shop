@@ -2,22 +2,16 @@ package com.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shop.pojo.Product;
 import com.shop.pojo.ProductCategory;
-import com.shop.pojo.ProductCategoryResult;
 import com.shop.pojo.RespBean;
 import com.shop.service.IProductCategoryService;
-import com.shop.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 /**

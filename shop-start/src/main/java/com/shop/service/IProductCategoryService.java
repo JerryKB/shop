@@ -1,10 +1,8 @@
 package com.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shop.pojo.Product;
 import com.shop.pojo.ProductCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.shop.pojo.ProductCategoryResult;
 import com.shop.pojo.RespBean;
 
 import javax.servlet.http.HttpServletRequest;
