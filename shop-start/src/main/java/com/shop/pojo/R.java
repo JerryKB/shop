@@ -1,4 +1,4 @@
-package com.shop.controller.Model;
+package com.shop.pojo;
 
 
 import lombok.Data;

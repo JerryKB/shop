@@ -2,18 +2,15 @@ package com.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shop.controller.Model.R;
-import com.shop.pojo.Admin;
+import com.shop.pojo.R;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.User;
 import com.shop.pojo.UserLogin;
-import com.shop.service.IAdminService;
 import com.shop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 /**

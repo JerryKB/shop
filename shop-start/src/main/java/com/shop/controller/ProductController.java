@@ -2,8 +2,7 @@ package com.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.shop.controller.Model.R;
+import com.shop.pojo.R;
 import com.shop.pojo.Product;
 import com.shop.pojo.RespBean;
 import com.shop.service.impl.ProductServiceImpl;

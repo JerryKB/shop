@@ -2,7 +2,7 @@ package com.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shop.controller.Model.R;
+import com.shop.pojo.R;
 import com.shop.pojo.Order;
 import com.shop.pojo.RespBean;
 import com.shop.service.IOrderService;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * <p>
