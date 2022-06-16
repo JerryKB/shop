@@ -15,5 +15,5 @@ import java.util.List;
  */
 
 public interface IProductDetailImgService extends IService<ProductDetailImg> {
-    public List<ProductDetailImg> findImg();
+    public List<ProductDetailImg> findImgById(Integer id);
 }

@@ -21,13 +21,13 @@ import java.util.List;
  * @since 2022-06-14
  */
 @RestController
-@RequestMapping("/product-detail-img")
+@RequestMapping("/product-img")
 public class ProductDetailImgController {
     @Autowired
     ProductDetailImgServiceImpl productDetailImgService;
 
-    @GetMapping("")
-    public List<ProductDetailImg> findImg(HttpServletRequest httpServletRequest){
-        return productDetailImgService.findImg();
+    @GetMapping("/findImgById")
+    public List<ProductDetailImg> findImg(Integer id){
+        return productDetailImgService.findImgById(id);
     }
 }

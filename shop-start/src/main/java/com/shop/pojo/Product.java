@@ -1,5 +1,7 @@
 package com.shop.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,6 +30,7 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "商品id")
+    @TableId(type= IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty(value = "商品名称")

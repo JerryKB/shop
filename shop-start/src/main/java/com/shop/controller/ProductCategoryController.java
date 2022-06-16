@@ -6,6 +6,7 @@ import com.shop.pojo.ProductCategory;
 import com.shop.pojo.R;
 import com.shop.pojo.RespBean;
 import com.shop.service.IProductCategoryService;
+import com.shop.service.impl.ProductCategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ import java.util.List;
 @RequestMapping("/product-category")
 public class ProductCategoryController {
     @Autowired
-    IProductCategoryService productCategoryService;
+    ProductCategoryServiceImpl productCategoryService;
 
     @GetMapping("/getInfo")
     public List<ProductCategory> showAllCategory(HttpServletRequest httpServletRequest) {
@@ -61,6 +62,22 @@ public class ProductCategoryController {
         }
         return new R(true, cateIPage);
     }
+//    @GetMapping("/getsecond/{id}")
+//    public List<ProductCategory> getlistbyid(@PathVariable int id){
+//        List<ProductCategory> getlistbyid = productCategoryService.getlistbyid(id);
+//        System.out.println(getlistbyid);
+//        return getlistbyid;
+//    }
+    //获取二级分页信息
+//    @GetMapping("/secondlevel/{current2}/{querrywrapper2}")
+//    public R getPage2(@PathVariable int current2, @PathVariable
+//            int querrywrapper2, ProductCategory productCategory) {
+//        IPage<ProductCategory> cateIPage = productCategoryService.getPagelevel2(current2, querrywrapper2, productCategory);
+//        if (current2 > cateIPage.getPages()) {
+//            cateIPage = productCategoryService.getPagelevel2((int) cateIPage.getPages(), querrywrapper2, productCategory);
+//        }
+//        return new R(true, cateIPage);
+//    }
 
     //通过id获取数据
     @GetMapping("/getbyid/{id}")
@@ -79,5 +96,10 @@ public class ProductCategoryController {
     @DeleteMapping("/deletebyid/{id}")
     public R delete(@PathVariable Integer id) {
         return new R(productCategoryService.deleteById(id));
+    }
+    @PostMapping("/add")
+    public R save(ProductCategory productCategory){
+        Boolean flag=productCategoryService.save(productCategory);
+        return new R(flag,flag?"添加成功^_^!":"添加失败-_-|||");
     }
 }
