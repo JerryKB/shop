@@ -30,7 +30,6 @@ public interface IProductCategoryService extends IService<ProductCategory> {
 
     Boolean deleteById(Integer id);
     //获取列表
-    List<ProductCategory> getlistbyid(int id);
 ////获取第二及目录
 //    IPage<ProductCategory> getPagelevel2(int current, int querrywrapper, ProductCategory productCategory);
 }

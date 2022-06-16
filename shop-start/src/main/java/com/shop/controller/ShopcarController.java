@@ -4,6 +4,7 @@ package com.shop.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
+import com.shop.pojo.UserShopCar;
 import com.shop.service.IOrderService;
 import com.shop.service.IShopcarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,18 @@ public class ShopcarController {
 
     }
     @GetMapping("/showALl")
-    public IPage<Shopcar> findAll(Integer CurrentPage,Integer Size,HttpServletRequest httpServletRequest){
-        return shopcarService.findAll(CurrentPage,Size,httpServletRequest);
+    public IPage<Shopcar> findAll(Integer userId,Integer CurrentPage,Integer Size,HttpServletRequest httpServletRequest){
+        return shopcarService.findAll(userId,CurrentPage,Size,httpServletRequest);
     }
-    @GetMapping("transferOrder")
+    @GetMapping("/transferOrder")
     public void transfer(@RequestBody Shopcar shopcar, String order_receiver, Integer order_mobile, String order_remark, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         String orderCode = orderService.saveOrder(shopcar,order_receiver,order_mobile,order_remark);
         shopcarService.delete(shopcar);
         httpServletResponse.sendRedirect("/order/orderDetail?order_code="+orderCode);
     }
+    @GetMapping("/getAll/{id}")
+    public List<UserShopCar> getAll(@PathVariable Integer id){
+        return shopcarService.getAll(id);
+    }
+
 }

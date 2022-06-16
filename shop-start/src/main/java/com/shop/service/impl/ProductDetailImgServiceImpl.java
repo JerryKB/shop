@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductDetailImgServiceImpl extends ServiceImpl<ProductDetailImgMapper, ProductDetailImg> implements IProductDetailImgService {
     @Autowired
     ProductDetailImgMapper productDetailImgMapper;
-    public List<ProductDetailImg> findImg(){
-        return productDetailImgMapper.selectList(new QueryWrapper<ProductDetailImg>());
+    public List<ProductDetailImg> findImgById(Integer id){
+        return productDetailImgMapper.selectList(new QueryWrapper<ProductDetailImg>().eq("product_id",id));
     }
 }

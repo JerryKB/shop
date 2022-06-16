@@ -77,6 +77,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return uuid;
     }
 
+    public RespBean addOrder(Order order){
+        String uuid = UUID.randomUUID().toString();
+        order.setOrder_code(uuid);
+        order.setOrder_statu(1);
+        order.setOrder_createtime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        int add = orderMapper.insert(order);
+        return add>0 ?  RespBean.success("创建订单成功"): RespBean.error("创建订单失败");
+    }
+
     @Override
     public RespBean update(Order order) {
         int update = orderMapper.update(order,new UpdateWrapper<Order>().eq("order_code",order.getOrder_code()));

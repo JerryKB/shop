@@ -56,4 +56,9 @@ public class ProductSpecsController {
         boolean flag = productSpecsService.save(productSpecs);
         return new R(flag,flag?"添加成功！":"添加失败！");
     }
+
+    @GetMapping("/findSpecsById")
+    public ProductSpecs findById(Integer id){
+        return productSpecsService.findById(id);
+    }
 }

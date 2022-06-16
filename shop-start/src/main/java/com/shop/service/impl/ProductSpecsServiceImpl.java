@@ -49,4 +49,9 @@ public class ProductSpecsServiceImpl extends ServiceImpl<ProductSpecsMapper, Pro
     public List<ProductSpecs> getAll() {
         return productSpecsMapper.selectList(null);
     }
+
+    @Override
+    public ProductSpecs findById(Integer id) {
+        return productSpecsMapper.selectById(id);
+    }
 }

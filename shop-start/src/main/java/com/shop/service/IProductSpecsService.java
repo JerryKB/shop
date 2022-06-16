@@ -16,7 +16,8 @@ import java.util.List;
  */
 
 public interface IProductSpecsService extends IService<ProductSpecs> {
-    public List<ProductSpecs> findAllInfo();
+    List<ProductSpecs> findAllInfo();
+    ProductSpecs findById(Integer id);
     //判断类型修改
     Boolean modify(ProductSpecs productSpecs);
     //根据id删除

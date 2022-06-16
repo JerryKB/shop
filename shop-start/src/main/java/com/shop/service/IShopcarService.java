@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.shop.pojo.UserShopCar;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.List;
  */
 
 public interface IShopcarService extends IService<Shopcar> {
-    public IPage<Shopcar> findAll(Integer CurrentPage, Integer Size, HttpServletRequest httpServletRequest);
+    public IPage<Shopcar> findAll(Integer userId,Integer CurrentPage, Integer Size, HttpServletRequest httpServletRequest);
     public void delete(Shopcar shopcar);
     RespBean add(Shopcar shopcar);
+    List<UserShopCar> getAll(Integer id);
 }
