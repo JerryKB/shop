@@ -45,4 +45,9 @@ public class ShopcarController {
         shopcarService.delete(shopcar);
         httpServletResponse.sendRedirect("/order/orderDetail?order_code="+orderCode);
     }
+    @GetMapping("/getAll/{id}")
+    public List<Shopcar> getAll(@PathVariable Integer id){
+        return shopcarService.getAll(id);
+    }
+
 }

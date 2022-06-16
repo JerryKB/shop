@@ -51,4 +51,10 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
         int insert = shopcarMapper.insert(shopcar);
         return insert>0?RespBean.success("添加成功"):RespBean.error("添加失败");
     }
+
+    @Override
+    public List<Shopcar> getAll(Integer id) {
+        return shopcarMapper.selectList(new QueryWrapper<Shopcar>().eq("user_id",id));
+    }
+
 }

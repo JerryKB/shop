@@ -21,4 +21,5 @@ public interface IShopcarService extends IService<Shopcar> {
     public IPage<Shopcar> findAll(Integer CurrentPage, Integer Size, HttpServletRequest httpServletRequest);
     public void delete(Shopcar shopcar);
     RespBean add(Shopcar shopcar);
+    List<Shopcar> getAll(Integer id);
 }
