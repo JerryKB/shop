@@ -1,5 +1,6 @@
 package com.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,6 +10,7 @@ import com.shop.mapper.ProductCategoryMapper;
 import com.shop.pojo.RespBean;
 import com.shop.service.IProductCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,32 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         }
         return RespBean.error("请务频繁操作");
     }
+
+    //分页
+    @Override
+    public IPage<ProductCategory> getPage(int current, int querrywrapper, ProductCategory productCategory) {
+//        //条件查询构造器
+        LambdaQueryWrapper<ProductCategory> lmd =new LambdaQueryWrapper<ProductCategory>();
+//        //lamda语句，like为条件匹配
+        lmd.like(Strings.isNotEmpty(productCategory.getName()),ProductCategory::getName,productCategory.getName());
+//        lmd.like((productCategory.getLevel().intValue()!=0),ProductCategory::getLevel,productCategory.getLevel());
+//        lmd.like(Strings.isNotEmpty(user.getPassword()),User::getPassword,user.getPassword());
+        IPage<ProductCategory> page = new Page<ProductCategory>(current,querrywrapper);
+        productCategoryMapper.selectPage(page,lmd);
+        return page;
+    }
+    //修改
+    @Override
+    public Boolean modify(ProductCategory productCategory) {
+        return productCategoryMapper.updateById(productCategory) > 0;
+
+    }
+    //    通过id删除
+    @Override
+    public Boolean deleteById(Integer id) {
+        return productCategoryMapper.deleteById(id)>0;
+    }
+
     @Override
     public RespBean update(ProductCategory productCategory) {
         int update = productCategoryMapper.update(productCategory,new UpdateWrapper<ProductCategory>().eq("id",productCategory.getId()));

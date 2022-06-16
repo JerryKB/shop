@@ -80,11 +80,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         //条件查询构造器
         LambdaQueryWrapper<Product> lmd = new LambdaQueryWrapper<Product>();
         //lamda语句，like为条件匹配
+        if (product.getName().equals("undefined"))
+            product.setName("");
         lmd.like(Strings.isNotEmpty(product.getName()), Product::getName, product.getName());
-        lmd.like((product.getPrice().intValue()!=0), Product::getPrice, product.getPrice());
         IPage<Product> page = new Page<Product>(current, querrywrapper);
-        productMapper.selectPage(page, lmd);
-        return page;
+        IPage<Product> productIPage = productMapper.selectPage(page, lmd);
+        return productIPage;
     }
 
     //修改
