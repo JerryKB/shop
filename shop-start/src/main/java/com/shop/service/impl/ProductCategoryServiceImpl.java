@@ -69,13 +69,6 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         return page;
     }
 
-//    @Override
-//    public IPage<ProductCategory> getPagelevel2(int current, int querrywrapper, ProductCategory productCategory) {
-////        List<ProductCategory> productCategories = productCategoryMapper.selectList(new QueryWrapper<ProductCategory>().eq("level",1));
-//        IPage<ProductCategory> page = new Page<ProductCategory>(current,querrywrapper);
-//        productCategoryMapper.selectPage(page, new QueryWrapper<ProductCategory>().eq("level",2));
-//        return page;
-//    }
     //修改
     @Override
     public Boolean modify(ProductCategory productCategory) {

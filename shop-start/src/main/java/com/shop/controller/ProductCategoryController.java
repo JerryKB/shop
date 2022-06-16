@@ -62,22 +62,13 @@ public class ProductCategoryController {
         }
         return new R(true, cateIPage);
     }
+    //分类跳级索引
     @GetMapping("/getsecond/{id}")
     public List<ProductCategory> getlistbyid(@PathVariable int id){
         List<ProductCategory> getlistbyid = productCategoryService.getlistbyid(id);
         System.out.println(getlistbyid);
         return getlistbyid;
     }
-    //获取二级分页信息
-//    @GetMapping("/secondlevel/{current2}/{querrywrapper2}")
-//    public R getPage2(@PathVariable int current2, @PathVariable
-//            int querrywrapper2, ProductCategory productCategory) {
-//        IPage<ProductCategory> cateIPage = productCategoryService.getPagelevel2(current2, querrywrapper2, productCategory);
-//        if (current2 > cateIPage.getPages()) {
-//            cateIPage = productCategoryService.getPagelevel2((int) cateIPage.getPages(), querrywrapper2, productCategory);
-//        }
-//        return new R(true, cateIPage);
-//    }
 
     //通过id获取数据
     @GetMapping("/getbyid/{id}")
@@ -97,6 +88,7 @@ public class ProductCategoryController {
     public R delete(@PathVariable Integer id) {
         return new R(productCategoryService.deleteById(id));
     }
+    //添加
     @PostMapping("/add")
     public R save(ProductCategory productCategory){
         Boolean flag=productCategoryService.save(productCategory);
