@@ -4,6 +4,7 @@ package com.shop.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
+import com.shop.pojo.UserShopCar;
 import com.shop.service.IOrderService;
 import com.shop.service.IShopcarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class ShopcarController {
         httpServletResponse.sendRedirect("/order/orderDetail?order_code="+orderCode);
     }
     @GetMapping("/getAll/{id}")
-    public List<Shopcar> getAll(@PathVariable Integer id){
+    public List<UserShopCar> getAll(@PathVariable Integer id){
         return shopcarService.getAll(id);
     }
 
