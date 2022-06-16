@@ -8,6 +8,7 @@ import com.shop.pojo.Order;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
 import com.shop.mapper.ShopcarMapper;
+import com.shop.pojo.UserShopCar;
 import com.shop.service.IShopcarService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/**
- * <p>
- *  服务实现类
- * </p>
- *
- * @author Wyx
- * @since 2022-06-14
- */
 @Service
 public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> implements IShopcarService {
 
@@ -51,4 +44,10 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
         int insert = shopcarMapper.insert(shopcar);
         return insert>0?RespBean.success("添加成功"):RespBean.error("添加失败");
     }
+
+    @Override
+    public List<UserShopCar> getAll(Integer id) {
+        return shopcarMapper.getAllCar(id);
+    }
+
 }

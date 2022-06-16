@@ -16,5 +16,8 @@
     <sql id="Base_Column_List">
         id, product_num, product_id, products_price, order_address, user_id
     </sql>
+    <select id="getAllCar" resultType="com.shop.pojo.UserShopCar">
+        select t1.id,t1.product_num ,t1.products_price,t2.img_src,t2.name from tb_shopcar t1,tb_product t2 where t1.user_id=#{id} and t1.product_id=t2.id
+    </select>
 
 </mapper>
