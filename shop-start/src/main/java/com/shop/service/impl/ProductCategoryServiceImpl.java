@@ -1,5 +1,6 @@
 package com.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -62,16 +63,12 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     //分页
     @Override
     public IPage<ProductCategory> getPage(int current, int querrywrapper, ProductCategory productCategory) {
-//        //条件查询构造器
-        LambdaQueryWrapper<ProductCategory> lmd =new LambdaQueryWrapper<ProductCategory>();
-//        //lamda语句，like为条件匹配
-        lmd.like(Strings.isNotEmpty(productCategory.getName()),ProductCategory::getName,productCategory.getName());
-//        lmd.like((productCategory.getLevel().intValue()!=0),ProductCategory::getLevel,productCategory.getLevel());
-//        lmd.like(Strings.isNotEmpty(user.getPassword()),User::getPassword,user.getPassword());
+//        List<ProductCategory> productCategories = productCategoryMapper.selectList(new QueryWrapper<ProductCategory>().eq("level",1));
         IPage<ProductCategory> page = new Page<ProductCategory>(current,querrywrapper);
-        productCategoryMapper.selectPage(page,lmd);
+        productCategoryMapper.selectPage(page, new QueryWrapper<ProductCategory>().eq("level",1));
         return page;
     }
+
     //修改
     @Override
     public Boolean modify(ProductCategory productCategory) {
@@ -82,6 +79,12 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     @Override
     public Boolean deleteById(Integer id) {
         return productCategoryMapper.deleteById(id)>0;
+    }
+//获取二级目录
+    @Override
+    public List<ProductCategory> getlistbyid(int id) {
+        List<ProductCategory> productCategories = productCategoryMapper.selectList(new QueryWrapper<ProductCategory>().eq("pid",id));
+        return productCategories;
     }
 
     @Override

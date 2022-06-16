@@ -80,4 +80,18 @@ public class ProductController {
         boolean flag = productService.save(product);
         return new R(flag,flag?"添加成功！":"添加失败！");
     }
+    //Sku获取列表
+    @GetMapping("/skugetall")
+    public List<Product> skuget(){
+        List<Product> all = productService.getAll();
+        System.out.println(all);
+        return all;
+    }
+    //通过name来getlist
+    @GetMapping("/getbyname")
+    public List<Product> getbyname(Product product){
+        List<Product> data = productService.getData(product);
+//        System.out.println(data);
+        return data;
+    }
 }

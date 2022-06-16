@@ -95,7 +95,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     }
 
-    //    通过id删除
+    //通过id删除
     @Override
     public Boolean deleteById(Integer id) {
         return productMapper.deleteById(id) > 0;
@@ -106,4 +106,15 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return productMapper.getPartProduct(category_id,limit);
     }
 
+    @Override
+    public List<Product> getAll() {
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        return  productMapper.selectList(queryWrapper);
+    }
+    //lamda判断name get List
+    public List<Product> getData(Product product){
+        LambdaQueryWrapper<Product> lmd= new LambdaQueryWrapper<Product>();
+            lmd.like(Strings.isNotEmpty(product.getName()), Product::getName, product.getName());
+           return productMapper.selectList(lmd);
+    }
 }

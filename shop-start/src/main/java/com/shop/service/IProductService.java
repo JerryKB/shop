@@ -33,4 +33,8 @@ public interface IProductService extends IService<Product> {
     //根据id删除
     Boolean deleteById(Integer id);
     List<Product> getPartProduct(int category_id,int limit);
+    //如其名
+    List<Product> getAll();
+
+    List<Product> getData(Product product);
 }
