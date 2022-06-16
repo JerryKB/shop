@@ -20,6 +20,7 @@ import java.util.List;
 
 public interface IShopcarService extends IService<Shopcar> {
     public IPage<Shopcar> findAll(Integer userId,Integer CurrentPage, Integer Size, HttpServletRequest httpServletRequest);
+    public RespBean delete(Integer id);
     public void delete(Shopcar shopcar);
     RespBean add(Shopcar shopcar);
     List<UserShopCar> getAll(Integer id);

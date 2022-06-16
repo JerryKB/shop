@@ -50,5 +50,10 @@ public class ShopcarController {
     public List<UserShopCar> getAll(@PathVariable Integer id){
         return shopcarService.getAll(id);
     }
+    @DeleteMapping("/deleteShopCar/{id}")
+    public RespBean deleteShopCar(@PathVariable Integer id){
+        return shopcarService.delete(id);
+
+    }
 
 }

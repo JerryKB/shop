@@ -35,8 +35,12 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
     }
 
     @Override
+    public RespBean delete(Integer id) {
+        return shopcarMapper.deleteById(id) > 0 ? RespBean.success("删除成功") : RespBean.error("删除失败");
+    }
+    @Override
     public void delete(Shopcar shopcar) {
-        shopcarMapper.deleteById(shopcar.getId());
+        shopcarMapper.deleteById(shopcar.getId()) ;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
         int insert = shopcarMapper.insert(shopcar);
         return insert>0?RespBean.success("添加成功"):RespBean.error("添加失败");
     }
+
 
     @Override
     public List<UserShopCar> getAll(Integer id) {
