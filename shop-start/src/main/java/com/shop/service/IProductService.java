@@ -35,4 +35,6 @@ public interface IProductService extends IService<Product> {
     List<Product> getPartProduct(int category_id,int limit);
     //如其名
     List<Product> getAll();
+
+    List<Product> getData(Product product);
 }

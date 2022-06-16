@@ -87,4 +87,11 @@ public class ProductController {
         System.out.println(all);
         return all;
     }
+    //通过name来getlist
+    @GetMapping("/getbyname")
+    public List<Product> getbyname(Product product){
+        List<Product> data = productService.getData(product);
+//        System.out.println(data);
+        return data;
+    }
 }
