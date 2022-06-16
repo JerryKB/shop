@@ -1,6 +1,4 @@
 package com.shop.controller;
-
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
@@ -9,20 +7,10 @@ import com.shop.service.IOrderService;
 import com.shop.service.IShopcarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author Wyx
- * @since 2022-06-14
- */
 @RestController
 @RequestMapping("/shopcar")
 public class ShopcarController {
@@ -32,7 +20,6 @@ public class ShopcarController {
     IOrderService orderService;
     @PostMapping("/add")
     public RespBean add(@RequestBody Shopcar shopcar){
-
         return shopcarService.add(shopcar);
 
     }
