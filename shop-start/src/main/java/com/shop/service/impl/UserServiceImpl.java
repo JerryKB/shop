@@ -104,6 +104,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public RespBean forgetPwd(UserBean userBean, String code, HttpServletRequest httpServletRequest)  {
         User user1 = userMapper.selectOne(new QueryWrapper<User>().eq("username", userBean.getUsername()));
+        if (user1 ==null)
+            return RespBean.error("该用户不存在，请重新输入");
+
+        if (!user1.getEmail().equals(userBean.getEmail())){
+            return RespBean.error("该邮箱与用户名不匹配，请重新输入");
+        }
+
         if (user1.getEmail().equals(userBean.getEmail())){
             if (code.toUpperCase().equals(httpServletRequest.getSession().getAttribute("checkCode")))
             {
@@ -116,11 +123,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
 
-        if (user1 ==null)
-            return RespBean.error("该用户不存在，请重新输入");
-        if (!user1.getEmail().equals(userBean.getEmail())){
-            return RespBean.error("该邮箱与用户名不匹配，请重新输入");
-        }
+
         return RespBean.error("未知错误,请联系管理员");
 
 

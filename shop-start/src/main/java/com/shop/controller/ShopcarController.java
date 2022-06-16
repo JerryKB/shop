@@ -7,11 +7,7 @@ import com.shop.pojo.Shopcar;
 import com.shop.service.IOrderService;
 import com.shop.service.IShopcarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +29,12 @@ public class ShopcarController {
     IShopcarService shopcarService;
     @Autowired
     IOrderService orderService;
+    @PostMapping("/add")
+    public RespBean add(@RequestBody Shopcar shopcar){
+
+        return shopcarService.add(shopcar);
+
+    }
     @GetMapping("/showALl")
     public IPage<Shopcar> findAll(Integer CurrentPage,Integer Size,HttpServletRequest httpServletRequest){
         return shopcarService.findAll(CurrentPage,Size,httpServletRequest);

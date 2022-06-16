@@ -44,8 +44,8 @@ public class UserController {
         return UserService.registry(userBean);
     }
 
-    @PostMapping("/forgetPwd")
-    public RespBean forgetPwd(UserBean userBean, String code, HttpServletRequest httpServletRequest){
+    @PostMapping("/forgetPwd/{code}")
+    public RespBean forgetPwd(@RequestBody UserBean userBean, @PathVariable String code, HttpServletRequest httpServletRequest){
         return UserService.forgetPwd(userBean,code,httpServletRequest);
     }
     //获取分页信息

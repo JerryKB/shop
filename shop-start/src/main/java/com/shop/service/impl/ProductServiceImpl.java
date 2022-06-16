@@ -35,7 +35,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     @Autowired
     ProductMapper productMapper;
     public List<Product> findRequirePro(Integer category_id) {
-        return productMapper.selectList(new QueryWrapper<Product>().eq("category_id",category_id));
+        return productMapper.selectList(new QueryWrapper<Product>().eq("category_id",category_id).eq("status",1));
     }
 
     @Override
@@ -99,6 +99,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     @Override
     public Boolean deleteById(Integer id) {
         return productMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<Product> getPartProduct(int category_id,int limit) {
+        return productMapper.getPartProduct(category_id,limit);
     }
 
 }

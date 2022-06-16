@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shop.pojo.Order;
+import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
 import com.shop.mapper.ShopcarMapper;
 import com.shop.service.IShopcarService;
@@ -43,5 +44,11 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
     @Override
     public void delete(Shopcar shopcar) {
         shopcarMapper.deleteById(shopcar.getId());
+    }
+
+    @Override
+    public RespBean add(Shopcar shopcar) {
+        int insert = shopcarMapper.insert(shopcar);
+        return insert>0?RespBean.success("添加成功"):RespBean.error("添加失败");
     }
 }

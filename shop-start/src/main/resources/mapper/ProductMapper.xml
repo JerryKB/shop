@@ -16,5 +16,8 @@
     <sql id="Base_Column_List">
         id, name, attribute_list, status, info, category_id
     </sql>
+    <select id="getPartProduct" resultType="com.shop.pojo.Product">
+        select * from tb_product where category_id=#{category_id} order by rand() limit #{limit}
+    </select>
 
 </mapper>
