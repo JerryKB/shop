@@ -88,8 +88,10 @@ public class ProductController {
         return all;
     }
     //通过name来getlist
-    @GetMapping("/getbyname")
-    public List<Product> getbyname(Product product){
+    @GetMapping("/getbyname/{name}")
+    public List<Product> getbyname(@PathVariable String name){
+        Product product = new Product();
+        product.setName(name);
         List<Product> data = productService.getData(product);
 //        System.out.println(data);
         return data;
