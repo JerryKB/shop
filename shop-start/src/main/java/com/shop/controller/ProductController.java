@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.R;
 import com.shop.pojo.Product;
@@ -34,7 +35,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("update")
+    @GetMapping("/update")
     public RespBean update(@RequestBody Product product,@RequestBody MultipartFile file) throws IOException {
         return productService.update(product,file);
     }
@@ -69,15 +70,10 @@ public class ProductController {
     public R delete(@PathVariable Integer id){
         return new R(productService.deleteById(id));
     }
-    //新增数据
-    @PostMapping
-    public R save(@RequestBody Product product){
+    //新增数据{有bug}
+    @PostMapping("/add")
+    public R save(Product product){
         boolean flag = productService.save(product);
         return new R(flag,flag?"添加成功！":"添加失败！");
-    }
-    //修改switch
-    @PutMapping("/updateswitch")
-    public R updateSwitch(@RequestBody Product product){
-        return new R(productService.updateById(product));
     }
 }
