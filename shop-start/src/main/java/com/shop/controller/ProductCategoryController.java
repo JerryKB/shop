@@ -62,12 +62,12 @@ public class ProductCategoryController {
         }
         return new R(true, cateIPage);
     }
-    @GetMapping("/getsecond/{id}")
-    public List<ProductCategory> getlistbyid(@PathVariable int id){
-        List<ProductCategory> getlistbyid = productCategoryService.getlistbyid(id);
-        System.out.println(getlistbyid);
-        return getlistbyid;
-    }
+//    @GetMapping("/getsecond/{id}")
+//    public List<ProductCategory> getlistbyid(@PathVariable int id){
+//        List<ProductCategory> getlistbyid = productCategoryService.getlistbyid(id);
+//        System.out.println(getlistbyid);
+//        return getlistbyid;
+//    }
     //获取二级分页信息
 //    @GetMapping("/secondlevel/{current2}/{querrywrapper2}")
 //    public R getPage2(@PathVariable int current2, @PathVariable

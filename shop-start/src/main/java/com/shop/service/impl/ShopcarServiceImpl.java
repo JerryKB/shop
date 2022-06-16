@@ -30,14 +30,14 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
     @Autowired
     ShopcarMapper shopcarMapper;
     @Override
-    public IPage<Shopcar> findAll(Integer CurrentPage,Integer Size,HttpServletRequest httpServletRequest) {
+    public IPage<Shopcar> findAll(Integer userId,Integer CurrentPage,Integer Size,HttpServletRequest httpServletRequest) {
         int current = 1,size=10;
         if (CurrentPage!=null)
             current = CurrentPage;
         if (Size!=null)
             size=Size;
         QueryWrapper<Shopcar> queryWrapper = new QueryWrapper<Shopcar>();
-        IPage<Shopcar> shopcars =shopcarMapper.selectPage(new Page<>(current,size),queryWrapper.eq("user_id",httpServletRequest.getAttribute("username")));
+        IPage<Shopcar> shopcars =shopcarMapper.selectPage(new Page<>(current,size),queryWrapper.eq("user_id",userId));
         return shopcars;
     }
 
