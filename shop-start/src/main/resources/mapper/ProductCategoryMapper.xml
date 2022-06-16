@@ -32,7 +32,7 @@
     <select id="showAll" resultType="list" resultMap="menu">
        select t1.id as id ,t1.name as name,t1.level as level,t1.status as status,t2.id as id1, t2.name as name1,t2.level as level1,t2.status as status1,t3.id as id2,t3.name as name2,t3.level as level2,t3.status as status3
        from tb_product_category t1,tb_product_category t2,tb_product_category t3
-       where t1.id=t2.pid and t2.id=t3.pid
+       where t1.id=t2.pid and t2.id=t3.pid and t1.status=1 and t2.status=1 and t3.status=1
     </select>
 
 </mapper>

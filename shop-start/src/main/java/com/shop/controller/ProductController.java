@@ -28,9 +28,13 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductServiceImpl productService;
-    @GetMapping("/findRequirePro")
-    public List<Product> findRequirePro(Integer category_id,HttpServletRequest request){
+    @GetMapping("/findRequirePro/{category_id}")
+    public List<Product> findRequirePro(@PathVariable Integer category_id,HttpServletRequest request){
         return productService.findRequirePro(category_id);
+    }
+    @GetMapping("/getPartProduct/{category_id}/{limit}")
+    public List<Product> getPart(@PathVariable int category_id,@PathVariable int limit){
+        return productService.getPartProduct(category_id,limit);
     }
 
 
