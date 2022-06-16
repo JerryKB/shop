@@ -23,4 +23,10 @@ public interface IProductCategoryService extends IService<ProductCategory> {
     RespBean update(ProductCategory productCategory);
     RespBean delete(ProductCategory productCategory);
     RespBean isEnable(ProductCategory productCategory);
+
+    IPage<ProductCategory> getPage(int current, int querrywrapper, ProductCategory productCategory);
+
+    Boolean modify(ProductCategory category);
+
+    Boolean deleteById(Integer id);
 }

@@ -33,14 +33,6 @@ public class ProductController {
         return productService.findRequirePro(category_id);
     }
 
-    @GetMapping("/find/{currentPage}/{Size}")
-    public IPage<Product> find(@RequestBody Product product, @PathVariable Integer currentPage,@PathVariable Integer Size, HttpServletRequest httpServletRequest){
-        IPage<Product> productIPage=productService.getPage(currentPage,Size,product);
-        if(currentPage > productIPage.getPages()){
-            productIPage=productService.getPage((int) productIPage.getPages(),Size,product);
-        }
-        return productIPage;
-    }
 
     @GetMapping("update")
     public RespBean update(@RequestBody Product product,@RequestBody MultipartFile file) throws IOException {
