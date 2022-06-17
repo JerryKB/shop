@@ -55,6 +55,9 @@ public class Order implements Serializable {
     @ApiModelProperty(value = "用户id")
     private Integer user_id;
 
+    @ApiModelProperty(value = "订单id")
+    private Integer product_id;
+
     @ApiModelProperty(value = "订单备注")
     private String order_remark;
     @ApiModelProperty(value = "商品单价")

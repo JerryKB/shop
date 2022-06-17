@@ -3,6 +3,7 @@ package com.shop.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shop.pojo.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.shop.pojo.OrderBean;
 import com.shop.pojo.RespBean;
 import com.shop.pojo.Shopcar;
 import org.mockito.internal.matchers.Or;
@@ -32,4 +33,6 @@ public interface IOrderService extends IService<Order> {
     Boolean modify(Order order);
     //根据id删除
     Boolean deleteById(Integer id);
+
+    List<OrderBean> getOrder(Integer id);
 }

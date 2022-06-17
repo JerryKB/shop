@@ -15,11 +15,15 @@
         <result column="user_id" property="order_remark" />
         <result column="user_id" property="product_price" />
         <result column="user_id" property="product_count" />
+
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, order_code, order_reciever, order_mobile, order_createtime, order_paytime, order_statu, user_id
+        id, order_code, order_reciever, order_mobile, order_createtime, order_paytime, order_statu, user_id,product_id
     </sql>
+    <select id="getOrder" resultType="com.shop.pojo.OrderBean">
+        select t1.order_code,t1.order_reciever,t1.product_price,t1.product_count,t1.product_id,t1.order_createtime,t1.order_statu,t2.name,t2.img_src from tb_order t1,tb_product t2 where t1.user_id=#{id} and t2.id=t1.product_id
+    </select>
 
 </mapper>

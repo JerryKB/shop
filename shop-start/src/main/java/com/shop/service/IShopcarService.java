@@ -24,4 +24,6 @@ public interface IShopcarService extends IService<Shopcar> {
     public void delete(Shopcar shopcar);
     RespBean add(Shopcar shopcar);
     List<UserShopCar> getAll(Integer id);
+
+    int getCarsNum(Integer id);
 }

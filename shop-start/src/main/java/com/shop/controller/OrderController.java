@@ -2,6 +2,7 @@ package com.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.shop.pojo.OrderBean;
 import com.shop.pojo.R;
 import com.shop.pojo.Order;
 import com.shop.pojo.RespBean;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -41,9 +44,17 @@ public class OrderController {
         return orderService.delete(order);
     }
 
-    @GetMapping("/addOrder")
+    @GetMapping("/addOrder/{order_reciever}/{order_mobile}/{user_id}/{product_price}/{product_count}/{product_id}")
     @ApiOperation("商品详情->新增订单")
-    public RespBean addOrder(@RequestBody Order order){
+    public RespBean addOrder(@PathVariable String order_reciever, @PathVariable Integer order_mobile, @PathVariable Integer user_id, @PathVariable BigDecimal product_price, @PathVariable Integer product_count,@PathVariable Integer product_id){
+        Order order = new Order();
+        order.setOrder_mobile(order_mobile);
+        order.setOrder_reciever(order_reciever);
+        order.setProduct_price(product_price);
+        order.setUser_id(user_id);
+        order.setProduct_count(product_count);
+        order.setProduct_id(product_id);
+        System.out.println(order);
         return orderService.addOrder(order);
     }
     //查询当前用户所有订单，分页
@@ -67,6 +78,10 @@ public class OrderController {
         Order orderid=orderService.getById(id);
         return new R(true, orderid);
     }
+    @GetMapping("/getOrderByUserId/{id}")
+    public List<OrderBean> getOrder(@PathVariable Integer id){
+        return orderService.getOrder(id);
+    }
 
     //传对象修改数据
     @PutMapping
@@ -78,4 +93,5 @@ public class OrderController {
     public R delete(@PathVariable Integer id){
         return new R(orderService.deleteById(id));
     }
+
 }

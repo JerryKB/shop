@@ -42,5 +42,9 @@ public class ShopcarController {
         return shopcarService.delete(id);
 
     }
+    @GetMapping("/gets/{id}")
+    public int getNum(@PathVariable Integer id){
+        return shopcarService.getCarsNum(id);
+    }
 
 }

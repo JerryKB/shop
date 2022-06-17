@@ -123,4 +123,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return orderMapper.deleteById(id)>0;
     }
 
+    @Override
+    public List<OrderBean> getOrder(Integer id) {
+        return orderMapper.getOrder(id);
+    }
+
 }

@@ -15,4 +15,5 @@ public class UserShopCar {
     private BigDecimal products_price;
     private String img_src;
     private String name;
+    private Integer product_id;
 }

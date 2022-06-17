@@ -55,4 +55,9 @@ public class ShopcarServiceImpl extends ServiceImpl<ShopcarMapper, Shopcar> impl
         return shopcarMapper.getAllCar(id);
     }
 
+    @Override
+    public int getCarsNum(Integer id) {
+        return shopcarMapper.selectCount(new QueryWrapper<Shopcar>().eq("user_id",id));
+    }
+
 }
